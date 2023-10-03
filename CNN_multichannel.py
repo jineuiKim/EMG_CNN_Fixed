@@ -12,11 +12,13 @@ import shutil
 
 def read_data(data="kaggle_data.xlsx", n = 0):
     resArray = []
-    data = xlrd.open_workbook(data)
-    table = data.sheet_by_index(0)
-    for i in range(table.nrows):
-        line = table.row_values(i)
-        resArray.append(line)
+    data = openpyxl.load_workbook(data)
+    table = data.worksheets[0]
+    for row in table.iter_rows(min_row=1, max_row=table.max_row, values_only=True):
+        resArray.append(row)
+    #for i in range(table.nrows):
+        #line = table.row_values(i)
+        #resArray.append(line)
     x = np.array(resArray)
     X = []
     y = []
